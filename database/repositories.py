@@ -20,7 +20,7 @@ class UserRespository:
         SELECT * FROM users WHERE email = %s
         """
 
-        self.cursor.execute(query, (email))
+        self.cursor.execute(query, (email,))
         return self.cursor.fetchone()
 
     def login(self, email, senha):

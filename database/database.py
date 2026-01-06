@@ -19,4 +19,4 @@ class BancoDeDados:
         )
 
     def get_conexao(self):
-        return self.conexao()
+        return self.conexao

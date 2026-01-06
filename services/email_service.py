@@ -2,6 +2,7 @@ import smtplib
 import email.message
 from dotenv import load_dotenv
 import os
+import random
 
 load_dotenv()
 
@@ -26,3 +27,8 @@ def enviar_email (destinatario):
         s.starttls()
         s.login(EMAIL_ADRESS, EMAIL_PASSWORD)
         s.sendmail(EMAIL_ADRESS, [destinatario], msg.as_string().encode("utf-8"))
+
+def codigo_de_confirmacao():
+    codigo = random.randint(1000, 9999)
+    print(codigo)
+

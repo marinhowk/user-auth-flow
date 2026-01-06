@@ -5,6 +5,7 @@ class Users:
         self.nome = nome
         self.email = email
         self.senha = self._hash_senha(senha)
+        # inserir se o status do usuário é true ou false
 
     def _hash_senha(self, senha):
         return hashlib.sha256(senha.encode()).hexdigest()
