@@ -2,6 +2,7 @@ import streamlit as st
 from database.database import BancoDeDados
 from database.repositories import UserRespository
 from models.models import Users
+from services.email_service import enviar_email, codigo_de_confirmacao
 
 db = BancoDeDados()
 repo = UserRespository(db)
@@ -73,12 +74,27 @@ elif st.session_state.tela == "cadastro":
 
         if st.button("Registrar", use_container_width= True):
             if senha_cadastro == confirmacao_de_senha:
-                tela_codigo_de_confirmacao()
+                enviar_email(email_cadastro)
+                st.session_state.tela = "codigo"
+                st.rerun()
             else:
                 msg.error("A senha de confirmação diverge da senha informada")
 
 # --- TELA DE CONFIRMAÇÃO DE EMAIL ---
+elif st.session_state.tela == "codigo":
+    col1, col2, col3 = st.columns([1, 1, 1])
 
+    with col2:
+        msg = st.empty()
+        st.subheader(f"Insira o código de verificação enviado no email informado")
+        codigo_de_verificação = st.number_input("Codigo de Verificação", max_value= 9999)
+
+        if st.button("Confirmar", use_container_width= True):
+            if codigo_de_verificação == codigo_de_confirmacao():
+                st.session_state.tela = "login"
+                st.rerun()
+            else:
+                msg.error("Código inválido")
 
 # --- TELA PAGINA PRINCIPAL ---
 elif st.session_state.tela == "pagina_principal":

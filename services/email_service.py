@@ -9,11 +9,9 @@ load_dotenv()
 EMAIL_ADRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv(("EMAIL_PASSWORD"))
 
-assunto = "Confirmação de Email"
-
-corpo = """
-<p>Prezados</p>
-<p>Segue email automático</p>"""
+def codigo_de_confirmacao():
+    codigo = random.randint(1000, 9999)
+    return codigo
 
 def enviar_email (destinatario):
     msg = email.message.Message()
@@ -28,7 +26,13 @@ def enviar_email (destinatario):
         s.login(EMAIL_ADRESS, EMAIL_PASSWORD)
         s.sendmail(EMAIL_ADRESS, [destinatario], msg.as_string().encode("utf-8"))
 
-def codigo_de_confirmacao():
-    codigo = random.randint(1000, 9999)
-    print(codigo)
+assunto = "Confirmação de Email"
+
+corpo = f"""
+<p>Prezado</p>
+<p>Segue código de verificação {codigo_de_confirmacao()}</p>"""
+
+
+
+
 
